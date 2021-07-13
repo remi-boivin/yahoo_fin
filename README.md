@@ -1,1 +1,1 @@
-# SP-500
+Create script to scrap financials datasets
