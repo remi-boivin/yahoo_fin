@@ -14,9 +14,10 @@ class Data():
         """"""
 
         for data in self.sp_500:
-            self.sp_500_data = pd.concat([self.sp_500_data, get_data(data, date, index_as_date=True)])
+            self.sp_500_data = pd.concat(
+                [self.sp_500_data, get_data(data, date, index_as_date=True)])
         self.sp_500_data.dropna()
-    
+
     def get_company(self, company):
         new_df = self.sp_500_data[(self.sp_500_data.ticker == company.upper())]
         return new_df
