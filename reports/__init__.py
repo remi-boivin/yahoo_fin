@@ -1,5 +1,8 @@
 from datetime import date
 from os import environ
+from yahoo_fin import stock_info
+import datas
+
 class Report():
     
     def __init__(self):
@@ -9,10 +12,8 @@ class Report():
 
     def generate_report(self, data):
         """ """
-
         f = open("report.txt", "a+")
         f.write(f"\n\n{date.today()} Changelog:\n\n")
-        f.write(f"{environ['CSV']} as : {len(data.tickers_list_data.index)} lines\n\n")
-        for company in data.tickers_list:
-            f.write(f"{company} has nb row: #{len(data.get_company(company).index)}\n")
+        f.write(f"{environ['CSV']} as : {len(data.index)} lines\n\n")
+        f.write(f"Exemple {environ['CSV']} contain: \n{data.describe()}\n")
         f.close()

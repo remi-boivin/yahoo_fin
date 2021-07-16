@@ -21,10 +21,9 @@ class Data():
             print(f'You dropped\n {nan_count}\nNaN occurences')
             self.tickers_list_data.dropna()
 
-    
     def get_company(self, company):
         """" """
 
         new_df = self.tickers_list_data[(
-            self.tickers_list_data.ticker == company.upper())]
+            self.tickers_list_data.tickner == company.upper())]
         return new_df
