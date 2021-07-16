@@ -25,5 +25,5 @@ class Data():
         """" """
 
         new_df = self.tickers_list_data[(
-            self.tickers_list_data.tickner == company.upper())]
+            self.tickers_list_data.ticker == company.upper())]
         return new_df
