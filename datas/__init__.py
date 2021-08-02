@@ -17,7 +17,7 @@ class Data():
             self.tickers_list_data = pd.concat(
                 [self.tickers_list_data, stock_info.get_data(data, date, index_as_date=True)])
         nan_count = self.tickers_list_data.isna().sum()
-        if 0 in nan_count:
+        if 0 not in nan_count:
             print(f'You dropped\n {nan_count}\nNaN occurences')
             self.tickers_list_data.dropna()
 
