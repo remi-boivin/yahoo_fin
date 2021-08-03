@@ -27,9 +27,9 @@ class StockExchange():
                 try:
                     self.tickers_list_data = stock_info.get_data(
                         data, date, index_as_date=False)
-                    nan_count = self.tickers_list_data.isna().sum()
-                    if 0 not in nan_count:
-                        print(f'You dropped\n {nan_count}\nNaN occurences')
+                    nan_count = self.tickers_list_data.isna()
+                    if True in nan_count:
+                        print(f'You dropped\n {self.tickers_list_data.isna().sum().sum()}\nNaN occurences')
                         self.tickers_list_data.dropna()
                     if not path.exists(f'datas/{data}'):
                         mkdir(f"datas/{data}")
