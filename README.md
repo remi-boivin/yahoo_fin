@@ -41,11 +41,8 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* Create datas folder
-  ```sh
-  mkdir datas
-  ```
-* Create datas/tmp folder
+
+* Create tmp folder in data
   ```sh
   mkdir datas/tmp
   ```
