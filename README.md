@@ -67,10 +67,23 @@ This is an example of how to list things you need to use the software and how to
 ## Usage
 
   ```sh
- python3 scrap.py --stock "SP-500" --date-start "01/01/1920" --date-end "01/12/2020"
+ python3 scrap.py -h
+ ```
+
+Print the help message
+
+  ```sh
+ python3 scrap.py -s SP-500 -d 2020/08/03
  ```
 
 you will recover sp-500 stock exchange datas
+
+## Stock exchange list
+* NASDAQ
+* FTSE
+* SP-500
+* NIFTY
+* OTHER
 
 ## Contact
 
