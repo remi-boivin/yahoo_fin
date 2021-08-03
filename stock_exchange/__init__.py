@@ -1,4 +1,4 @@
-from os import environ, system
+from os import environ, system, mkdir, path
 from yahoo_fin import stock_info
 import pandas as pd
 import numpy as np
@@ -26,12 +26,14 @@ class StockExchange():
             try:
                 try:
                     self.tickers_list_data = stock_info.get_data(
-                        data, date, index_as_date=True)
+                        data, date, index_as_date=False)
                     nan_count = self.tickers_list_data.isna().sum()
                     if 0 not in nan_count:
                         print(f'You dropped\n {nan_count}\nNaN occurences')
                         self.tickers_list_data.dropna()
-                    self.tickers_list_data.to_csv(f"datas/tmp/{data}.csv")
+                    if not path.exists(f'datas/{data}'):
+                        mkdir(f"datas/{data}")
+                    self.tickers_list_data.to_csv(f"datas/{data}/{data}.csv", index=False)
                 except KeyError:
                     print('Key Timestamp not found')
             except AssertionError:
@@ -41,8 +43,7 @@ class StockExchange():
         csvfiles = []
         csv = pd.DataFrame()
 
-        for file in glob.glob("datas/tmp/*.csv"):
+        for file in glob.glob("datas/*/*.csv"):
             csv = pd.concat(
-                [csv, pd.read_csv(f"{file}")])
-        csv.to_csv(environ['CSV'])
-        system("rm datas/tmp/*.csv")
+                [csv, pd.read_csv(f"{file}", index_col=0)])
+            csv.to_csv(environ['CSV'])
