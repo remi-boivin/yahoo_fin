@@ -42,10 +42,6 @@ To get a local copy up and running follow these simple steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 
-* Create tmp folder in data
-  ```sh
-  mkdir datas/tmp
-  ```
 * Create a virtualenv
   ```sh
   python3 -m venv VIRTUALENV_NAME
@@ -65,7 +61,8 @@ This is an example of how to list things you need to use the software and how to
    ```
 2. Install dependencies
    ```sh
- pip3 install -r requirements.txt```
+   pip3 install -r requirements.txt
+   ```
 
 ## Usage
 
