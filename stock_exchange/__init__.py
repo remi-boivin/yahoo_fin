@@ -1,4 +1,4 @@
-from os import environ, system, mkdir, path
+from os import getenv, system, mkdir, path
 from yahoo_fin import stock_info
 import pandas as pd
 import numpy as np
@@ -16,6 +16,7 @@ class StockExchange():
             'NIFTY': stock_info.tickers_nifty50,
             'OTHER': stock_info.tickers_other,
         }
+        self.ticker_tag = ticker_tag
         self.tickers_list = tickers[ticker_tag]()
         self.tickers_list_data = pd.DataFrame()
 
@@ -31,9 +32,11 @@ class StockExchange():
                     if 0 not in nan_count:
                         print(f'You dropped\n {nan_count}\nNaN occurences')
                         self.tickers_list_data.dropna()
-                    if not path.exists(f'datas/{data}'):
-                        mkdir(f"datas/{data}")
-                    self.tickers_list_data.to_csv(f"datas/{data}/{data}.csv", index=False)
+                    if not path.exists(f'datas/{self.ticker_tag}'):
+                        mkdir(f"datas/{self.ticker_tag}")
+                    if not path.exists(f'datas/{self.ticker_tag}/{data}'):
+                        mkdir(f"datas/{self.ticker_tag}/{data}")
+                    self.tickers_list_data.to_csv(f"datas/{self.ticker_tag}/{data}/{data}.csv", index=False)
                 except KeyError:
                     print('Key Timestamp not found')
             except AssertionError:
@@ -43,7 +46,7 @@ class StockExchange():
         csvfiles = []
         csv = pd.DataFrame()
 
-        for file in glob.glob("datas/*/*.csv"):
+        for file in glob.glob("datas/*/*/*.csv"):
             csv = pd.concat(
                 [csv, pd.read_csv(f"{file}", index_col=0)])
-            csv.to_csv(environ['CSV'])
+            csv.to_csv(getenv('CSV', 'datas/data.csv'))
