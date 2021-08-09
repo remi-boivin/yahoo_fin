@@ -33,7 +33,7 @@ class StockExchange():
                         data, date, index_as_date=False)
                     nan_count = self.tickers_list_data.isna().sum()
                     if 0 not in nan_count:
-                        print(f'You dropped\n {nan_count}\nNaN occurences')
+                        print(f'You dropped {nan_count.sum()} NaN occurences')
                         self.tickers_list_data.dropna()
                     if not path.exists(f'datas/{folder_name}'):
                         mkdir(f"datas/{folder_name}/")
