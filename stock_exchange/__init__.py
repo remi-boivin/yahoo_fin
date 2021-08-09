@@ -3,6 +3,8 @@ from yahoo_fin import stock_info
 import pandas as pd
 import numpy as np
 import glob
+from datetime import datetime
+import time
 
 
 class StockExchange():
@@ -22,7 +24,8 @@ class StockExchange():
 
     def get_historical_datas(self, date='01/01/1990'):
         """ """
-
+    
+        folder_name = int(time.mktime(datetime.strptime(datetime.now().strftime('%S/%d/%m/%Y'), '%S/%d/%m/%Y').timetuple()))
         for data in self.tickers_list:
             try:
                 try:
@@ -32,15 +35,17 @@ class StockExchange():
                     if 0 not in nan_count:
                         print(f'You dropped\n {nan_count}\nNaN occurences')
                         self.tickers_list_data.dropna()
-                    if not path.exists(f'datas/{self.ticker_tag}'):
-                        mkdir(f"datas/{self.ticker_tag}")
-                    if not path.exists(f'datas/{self.ticker_tag}/{data}'):
-                        mkdir(f"datas/{self.ticker_tag}/{data}")
-                    self.tickers_list_data.to_csv(f"datas/{self.ticker_tag}/{data}/{data}.csv", index=False)
+                    if not path.exists(f'datas/{folder_name}'):
+                        mkdir(f"datas/{folder_name}/")
+                    if not path.exists(f'datas/{folder_name}/{self.ticker_tag}'):
+                        mkdir(f"datas/{folder_name}/{self.ticker_tag}")
+                    if not path.exists(f'datas/{folder_name}/{self.ticker_tag}/{data}'):
+                        mkdir(f"datas/{folder_name}/{self.ticker_tag}/{data}")
+                    self.tickers_list_data.to_csv(f"datas/{folder_name}/{self.ticker_tag}/{data}/{data}.csv", index=False)
                 except KeyError:
                     print('Key Timestamp not found')
             except AssertionError:
-                print('No data')
+                print(f'The ticker {data} has no data')
 
     def create_csv(self):
         csvfiles = []
