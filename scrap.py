@@ -8,10 +8,10 @@ from os import getenv
 def usage():
     print("Usage python3 scrap.py -s STOCK_EXCHANGE_TAG -d START_DATE\n")
     print("-c       Concat all csv in datas/tmp into one csv. The output file is define by CSV env var\n")
-    print("-d       Set when we start to scrap data. The format of date must be YY::MM::DD. This arg is obligatory \n")
+    print("-d       Set when we start to scrap data. The format of date must be YY::MM::DD. This arg is mandatory \n")
     print("-h       Print this output. This option can't be use with others\n")
     print("-r       Generate a report. The output file is define by CSV env var\n")
-    print("-s       Define which stock exchange we want extract data. This arg is obligatory\n")
+    print("-s       Define which stock exchange we want extract data. This arg is mandatory\n")
     print("         NASDAQ; FTSE; SP-500; NIFTY; OTHER\n")
 
 
