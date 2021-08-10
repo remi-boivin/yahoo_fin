@@ -1,61 +1,49 @@
 from stock_exchange import *
 from reports import *
 from sys import argv, exit
-import getopt
+from optparse import OptionParser
 from os import getenv
 
-
-def usage():
-    print("Usage python3 scrap.py -s STOCK_EXCHANGE_TAG -d START_DATE\n")
-    print("-c       Concat all csv in datas/tmp into one csv. The output file is define by CSV env var\n")
-    print("-d       Set when we start to scrap data. The format of date must be YY::MM::DD. This arg is mandatory \n")
-    print("-h       Print this output. This option can't be use with others\n")
-    print("-r       Generate a report. The output file is define by CSV env var\n")
-    print("-s       Define which stock exchange we want extract data. This arg is mandatory\n")
-    print("         NASDAQ; FTSE; SP-500; NIFTY; ALL (default)\n")
+def get_opts():
+    parser = OptionParser()
+    parser.add_option("-v", "--verbose",
+                    action="store_true", dest="verbose", default=False,
+                    help="Increase output verbosity.")
+    parser.add_option("-t", "--tickers",
+                    default="ALL", dest="tickers",
+                    help="Choose specific market tickers. (NASDAQ; FTSE; SP-500; NIFTY; ALL [default]).")
+    parser.add_option("-d", "--start_date",
+                    default="1970::01::01", dest="start_date",
+                    help="Set the start date (format: YY::MM::DD, default is 1970::01::01).")
+    parser.add_option("-r", "--report",
+                    action="store_true", dest="report", default=False,
+                    help="Build a report of the downloaded data.")
+    parser.add_option("-c", "--concat",
+                    action="store_true", dest="concat", default=False,
+                    help="Concat all csv in datas/tmp into one csv. The output file is define by CSV env var.")
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    generate_report = False
-    concat_csv = False
-
+    (options, args) = get_opts()
+    print(f"Launching script with options : {options}")
     try:
-        opts, args = getopt.getopt(argv[1:], "s:d:hcr")
-    except getopt.GetoptError:
-        usage()
-        exit(2)
-
-for opt, arg in opts:
-    stock_exchange = 'ALL'
-    if opt == '-h':
-        usage()
-        exit(0)
-    elif opt == '-s':
-        stock_exchange = arg
-    elif opt == '-d':
-        start_date = arg
-    elif opt == '-r':
-        generate_report = True
-    elif opt == '-c':
-        concat_csv = True
-
-try:
-    s = StockExchange(stock_exchange)
-    s.get_historical_datas(start_date)
-    df = pd.DataFrame()
-    if concat_csv == True:
-        s.create_csv()
-    if generate_report == True:
-        report = Report()
-        print('ok')
-        try:
-            df = pd.read_csv(getenv('CSV', 'datas/data.csv'))
-            report.generate_report(df)
-        except FileNotFoundError:
+        s = StockExchange(options.tickers)
+        s.get_historical_datas(options.start_date)
+        df = pd.DataFrame()
+        if options.concat == True:
             s.create_csv()
-            df = pd.read_csv(getenv('CSV', 'datas/data.csv'))
-            report.generate_report(df)
-            system(f"rm {getenv('CSV', 'datas/data.csv')}")
-except KeyError as e:
-    print(f"The key {format(e)} not exist. Please check if you didn't make a mistake. You can use -h arg to see a list of stock exchange")
-    exit(2)
+        if options.report == True:
+            report = Report()
+            print('ok')
+            try:
+                df = pd.read_csv(getenv('CSV', 'datas/data.csv'))
+                report.generate_report(df)
+            except FileNotFoundError:
+                s.create_csv()
+                df = pd.read_csv(getenv('CSV', 'datas/data.csv'))
+                report.generate_report(df)
+                system(f"rm {getenv('CSV', 'datas/data.csv')}")
+    except KeyError as e:
+        print(f"The key {format(e)} not exist. Please check if you didn't make a mistake. You can use -h arg to see a list of stock exchange")
+        exit(2)
