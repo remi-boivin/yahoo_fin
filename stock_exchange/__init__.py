@@ -9,6 +9,11 @@ import time
 
 class StockExchange():
 
+    def __init__(self):
+        ticker_tag = 'ALL'
+        self.__init__(ticker_tag)
+
+
     def __init__(self, ticker_tag):
         """ """
         tickers = {
@@ -16,11 +21,12 @@ class StockExchange():
             'NASDAQ': stock_info.tickers_nasdaq,
             'FTSE': stock_info.tickers_ftse250,
             'NIFTY': stock_info.tickers_nifty50,
-            'OTHER': stock_info.tickers_other,
+            'ALL': stock_info.tickers_other,
         }
         self.ticker_tag = ticker_tag
         self.tickers_list = tickers[ticker_tag]()
         self.tickers_list_data = pd.DataFrame()
+
 
     def get_historical_datas(self, date='01/01/1990'):
         """ """

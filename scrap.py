@@ -12,7 +12,7 @@ def usage():
     print("-h       Print this output. This option can't be use with others\n")
     print("-r       Generate a report. The output file is define by CSV env var\n")
     print("-s       Define which stock exchange we want extract data. This arg is mandatory\n")
-    print("         NASDAQ; FTSE; SP-500; NIFTY; OTHER\n")
+    print("         NASDAQ; FTSE; SP-500; NIFTY; ALL (default)\n")
 
 
 if __name__ == "__main__":
@@ -26,6 +26,7 @@ if __name__ == "__main__":
         exit(2)
 
 for opt, arg in opts:
+    stock_exchange = 'ALL'
     if opt == '-h':
         usage()
         exit(0)
