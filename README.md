@@ -78,6 +78,8 @@ Print the help message
 
 you will recover sp-500 stock exchange datas
 
+The project use yahoo_fin. Read the doc [yahoo_fin](https://github.com/Scalnyx/SP-500) if you want know more about yahoo_fin
+
 ## Stock exchange list
 * NASDAQ
 * FTSE
