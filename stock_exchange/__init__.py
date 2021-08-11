@@ -1,9 +1,9 @@
-from os import getenv, system, mkdir, path
 from yahoo_fin import stock_info
 import pandas as pd
 import numpy as np
 import glob
 from datetime import datetime
+import os
 import time
 import logging
 
@@ -43,12 +43,7 @@ class StockExchange():
                         logging.debug(f"count_nan={count_nan}")
                         self.tickers_list_data.dropna(how='any', inplace=True)
                         logging.info(f"{count_nan} rows has been dropped.")
-                    if not path.exists(f'data/{folder_name}'):
-                        mkdir(f"data/{folder_name}/")
-                    if not path.exists(f'data/{folder_name}/{self.ticker_tag}'):
-                        mkdir(f"data/{folder_name}/{self.ticker_tag}")
-                    if not path.exists(f'data/{folder_name}/{self.ticker_tag}/{data}'):
-                        mkdir(f"data/{folder_name}/{self.ticker_tag}/{data}")
+                    os.makedirs(f"data/{folder_name}/{self.ticker_tag}/{data}", exist_ok=True)
                     self.tickers_list_data.to_csv(f"data/{folder_name}/{self.ticker_tag}/{data}/{data}.csv", index=False)
                     logging.info(f"Downloaded data for {data} date={date} nb rows={len(self.tickers_list_data)}")
                 except KeyError:
@@ -63,4 +58,4 @@ class StockExchange():
         for file in glob.glob("data/*/*/*.csv"):
             csv = pd.concat(
                 [csv, pd.read_csv(f"{file}", index_col=0)])
-            csv.to_csv(getenv('CSV', 'data/data.csv'))
+            csv.to_csv(os.getenv('CSV', 'data/data.csv'))
