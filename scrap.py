@@ -14,8 +14,8 @@ def get_opts():
                     default="ALL", dest="tickers",
                     help="Choose specific market tickers. (NASDAQ; FTSE; SP-500; NIFTY; ALL [default]).")
     parser.add_option("-d", "--start_date",
-                    default="1970::01::01", dest="start_date",
-                    help="Set the start date (format: YY::MM::DD, default is 1970::01::01).")
+                    default="01/01/1970", dest="start_date",
+                    help="Set the start date (format: DD/MM/YY, default is 01/01/1970).")
     parser.add_option("-c", "--concat",
                     action="store_true", dest="concat", default=False,
                     help="Concat all csv in data/tmp into one csv. The output file is define by CSV env var.")
