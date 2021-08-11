@@ -5,6 +5,7 @@ import numpy as np
 import glob
 from datetime import datetime
 import time
+import logging
 
 
 class StockExchange():
@@ -47,9 +48,9 @@ class StockExchange():
                         mkdir(f"data/{folder_name}/{self.ticker_tag}/{data}")
                     self.tickers_list_data.to_csv(f"data/{folder_name}/{self.ticker_tag}/{data}/{data}.csv", index=False)
                 except KeyError:
-                    print('Key Timestamp not found')
+                    logging.error('Key Timestamp not found')
             except AssertionError:
-                print(f'The ticker {data} has no data')
+                logging.error(f'The ticker {data} has no data')
         return folder_name
 
     def create_csv(self):

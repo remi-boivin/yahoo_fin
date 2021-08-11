@@ -3,6 +3,7 @@ from reports import *
 from sys import argv, exit
 from optparse import OptionParser
 from os import getenv
+import logging
 
 def get_opts():
     parser = OptionParser()
@@ -20,9 +21,16 @@ def get_opts():
                     help="Concat all csv in data/tmp into one csv. The output file is define by CSV env var.")
     return parser.parse_args()
 
+def set_log_level(verbose):
+    if verbose:
+        logging.basicConfig(level=logging.INFO)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
 
 if __name__ == "__main__":
     (options, args) = get_opts()
+    set_log_level(options)
     print(f"Launching script with options : {options}")
     try:
         s = StockExchange(options.tickers)
@@ -40,5 +48,5 @@ if __name__ == "__main__":
             report.generate_report(df)
             system(f"rm {getenv('CSV', 'data/data.csv')}")
     except KeyError as e:
-        print(f"The key {format(e)} not exist. Please check if you didn't make a mistake. You can use -h arg to see a list of stock exchange")
+        logging.error(f"The key {format(e)} not exist. Please check if you didn't make a mistake. You can use -h arg to see a list of stock exchange")
         exit(2)
