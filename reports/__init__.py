@@ -4,14 +4,14 @@ from yahoo_fin import stock_info
 
 class Report():
     
-    def __init__(self):
+    def __init__(self, folder_timestamp):
         """ """
-
-        pass
+        self.folder_timestamp = folder_timestamp
 
     def generate_report(self, data):
         """ """
-        f = open(getenv('REPORT', 'datas/report.txt'), 'w+')
+        report_file = f"datas/{folder_timestamp}/report.txt"
+        f = open(report_file, 'w+')
         f.write(f"Start date: {data['date'][[data.index[0]][0]]}\nEnds at: {data['date'][[data.index[-1]][0]]}\n")
-        f.write(f"{getenv('CSV', 'datas/data.csv')} as : {len(data.index)} lines\n\n")
+        f.write(f"{report_file} has : {len(data.index)} lines\n\n")
         f.close()

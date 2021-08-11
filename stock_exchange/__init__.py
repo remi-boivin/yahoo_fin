@@ -29,17 +29,15 @@ class StockExchange():
 
 
     def get_historical_datas(self, date='01/01/1990'):
-        """ """
-    
-        folder_name = int(time.mktime(datetime.strptime(datetime.now().strftime('%S/%d/%m/%Y'), '%S/%d/%m/%Y').timetuple()))
+        folder_name = int(time.time())
         for data in self.tickers_list:
             try:
                 try:
                     self.tickers_list_data = stock_info.get_data(
                         data, date, index_as_date=False)
                     nan_count = self.tickers_list_data.isna().sum()
-                    if 0 not in nan_count:
-                        print(f'You dropped {nan_count.sum()} NaN occurences')
+                    if nan_count != 0:
+                        print(f"{nan_count.sum()} NaN occurrences has been dropped")
                         self.tickers_list_data.dropna()
                     if not path.exists(f'datas/{folder_name}'):
                         mkdir(f"datas/{folder_name}/")
@@ -52,6 +50,7 @@ class StockExchange():
                     print('Key Timestamp not found')
             except AssertionError:
                 print(f'The ticker {data} has no data')
+        return folder_name
 
     def create_csv(self):
         csvfiles = []
