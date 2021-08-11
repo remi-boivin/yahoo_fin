@@ -28,7 +28,7 @@ class StockExchange():
         self.tickers_list_data = pd.DataFrame()
 
 
-    def get_historical_datas(self, date='01/01/1990'):
+    def get_historical_data(self, date='01/01/1990'):
         folder_name = int(time.time())
         for data in self.tickers_list:
             try:
@@ -39,13 +39,13 @@ class StockExchange():
                     if nan_count != 0:
                         print(f"{nan_count.sum()} NaN occurrences has been dropped")
                         self.tickers_list_data.dropna()
-                    if not path.exists(f'datas/{folder_name}'):
-                        mkdir(f"datas/{folder_name}/")
-                    if not path.exists(f'datas/{folder_name}/{self.ticker_tag}'):
-                        mkdir(f"datas/{folder_name}/{self.ticker_tag}")
-                    if not path.exists(f'datas/{folder_name}/{self.ticker_tag}/{data}'):
-                        mkdir(f"datas/{folder_name}/{self.ticker_tag}/{data}")
-                    self.tickers_list_data.to_csv(f"datas/{folder_name}/{self.ticker_tag}/{data}/{data}.csv", index=False)
+                    if not path.exists(f'data/{folder_name}'):
+                        mkdir(f"data/{folder_name}/")
+                    if not path.exists(f'data/{folder_name}/{self.ticker_tag}'):
+                        mkdir(f"data/{folder_name}/{self.ticker_tag}")
+                    if not path.exists(f'data/{folder_name}/{self.ticker_tag}/{data}'):
+                        mkdir(f"data/{folder_name}/{self.ticker_tag}/{data}")
+                    self.tickers_list_data.to_csv(f"data/{folder_name}/{self.ticker_tag}/{data}/{data}.csv", index=False)
                 except KeyError:
                     print('Key Timestamp not found')
             except AssertionError:
@@ -56,7 +56,7 @@ class StockExchange():
         csvfiles = []
         csv = pd.DataFrame()
 
-        for file in glob.glob("datas/*/*/*.csv"):
+        for file in glob.glob("data/*/*/*.csv"):
             csv = pd.concat(
                 [csv, pd.read_csv(f"{file}", index_col=0)])
-            csv.to_csv(getenv('CSV', 'datas/data.csv'))
+            csv.to_csv(getenv('CSV', 'data/data.csv'))
