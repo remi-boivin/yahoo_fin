@@ -78,6 +78,11 @@ Print the help message
 
 you will recover sp-500 stock exchange datas
 
+By default the report will be save into :
+```
+datas/report.txt
+```
+
 ## Stock exchange list
 * NASDAQ
 * FTSE
