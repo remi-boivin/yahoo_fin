@@ -61,6 +61,7 @@ def get_cac40(tickers):
             t.start()
     except TimeoutException:
         print('no form')
+
 options = Options()
 options.add_argument("start-maximized")
 options.add_argument("disable-infobars")
@@ -70,8 +71,11 @@ driver = webdriver.Firefox()
 t = threading.Thread(target=driver.get, args=('https://fr.finance.yahoo.com/lookup',))
 t.start()
 tickers = get_tickers()
+# Return to home page to prevent wrong datas
 t = threading.Thread(target=driver.get, args=('https://fr.finance.yahoo.com/lookup',))
 t.start()
+
+WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn:nth-child(5)"))).click()
 while (True):
     get_cac40(tickers)
     sleep(10)
