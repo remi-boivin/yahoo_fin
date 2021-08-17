@@ -73,7 +73,7 @@ This is an example of how to list things you need to use the software and how to
 Print the help message
 
   ```sh
- python3 scrap.py -s SP-500 -d 2020/08/03
+ python3 scrap.py -t SP-500 -d 2020/08/03
  ```
 
 you will recover sp-500 stock exchange datas
@@ -103,8 +103,11 @@ datas/report.txt
    ```sh
    pip3 install -r requirements.txt
    ```
-
-3. Launch script
+3. Create datas directory
+   ```sh
+   mkdir datas
+   ```
+4. Launch script
    ```sh
    python3 intraday.py
    ```
