@@ -64,7 +64,7 @@ This is an example of how to list things you need to use the software and how to
    pip3 install -r requirements.txt
    ```
 
-## Usage
+## scrapper Usage
 
   ```sh
  python3 scrap.py -h
@@ -89,6 +89,24 @@ datas/report.txt
 * SP-500
 * NIFTY
 * OTHER
+
+## Use intraday script
+
+1. Install chromium-chromedriver
+
+    ```sh
+    sudo apt install chromium-chromedriver
+    ```
+
+2. Install dependencies
+   ```sh
+   pip3 install -r requirements.txt
+   ```
+
+3. Launch script
+   ```sh
+   python3 intraday.py
+   ```
 
 ## Contact
 
