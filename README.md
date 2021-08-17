@@ -64,7 +64,7 @@ This is an example of how to list things you need to use the software and how to
    pip3 install -r requirements.txt
    ```
 
-## Usage
+## scrapper Usage
 
   ```sh
  python3 scrap.py -h
@@ -79,6 +79,10 @@ Print the help message
 you will recover sp-500 stock exchange datas
 
 The project use yahoo_fin. Read the doc [yahoo_fin](https://github.com/Scalnyx/SP-500) if you want know more about yahoo_fin
+By default the report will be save into :
+```
+datas/report.txt
+```
 
 ## Stock exchange list
 * NASDAQ
@@ -86,6 +90,24 @@ The project use yahoo_fin. Read the doc [yahoo_fin](https://github.com/Scalnyx/S
 * SP-500
 * NIFTY
 * OTHER
+
+## Use intraday script
+
+1. Install chromium-chromedriver
+
+    ```sh
+    sudo apt install chromium-chromedriver
+    ```
+
+2. Install dependencies
+   ```sh
+   pip3 install -r requirements.txt
+   ```
+
+3. Launch script
+   ```sh
+   python3 intraday.py
+   ```
 
 ## Contact
 
